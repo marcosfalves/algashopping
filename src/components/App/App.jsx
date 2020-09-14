@@ -12,6 +12,7 @@ function App() {
 
     const [products, setProducts] = useState(productsMock.products)
     const [selectedProducts, setSelectedProducts] = useState([])
+    const [totalPrice, setTotalPrice] = useState(0)
 
     /*const [healthy, setHealthy] = useState(20)
     useEffect(function (){
@@ -19,6 +20,16 @@ function App() {
             setHealthy(80)
         }, 5000)
     },[])*/
+
+    useEffect(() => {
+        const total = selectedProducts
+            .map(product => product.price)
+            .reduce((a, b) => a + b, 0)
+
+        setTotalPrice(total)
+
+    }, [selectedProducts])
+
 
     useEffect(() => {
         const newSelectedProducts = products
@@ -86,6 +97,20 @@ function App() {
                             selectedProducts.filter(product => product.tags.includes('others')).length
                         )}
                     />
+                    <div style={{ marginTop: 12 }}>
+                        <h2 style={{ fontWeight: 400, fontSize: 12, color: '#00364A' }}>
+                            Previsão de gastos:
+                            <div style={{fontSize: 24}}>
+                                {
+                                    totalPrice.toLocaleString('pt-br', {
+                                    minimumFractionsDigitis: 2,
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                    })
+                                }
+                            </div>
+                        </h2>
+                    </div>
                 </div>
                 }
             />
