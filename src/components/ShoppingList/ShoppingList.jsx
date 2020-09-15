@@ -1,10 +1,16 @@
 import React from 'react'
 import Checkbox from '../../shared/Checkbox/Checkbox'
-//import { useSelector } from 'react-redux'
-//import { selectAllProducts } from '../../store/Products/Products.selectors'
+import { useSelector } from 'react-redux'
+import { selectAllProducts, selectSelectedProducts } from '../../store/Products/Products.selectors'
 import { Title, Wrapper, Array } from './ShoppingList.styles'
 
-function ShoppingList({ title, products, onToggle }) {
+function ShoppingList({ title, onToggle, displayOnlySelected }) {
+    const products = useSelector(
+        displayOnlySelected
+        ? selectSelectedProducts
+        :selectAllProducts
+    )
+
     return <Wrapper>
         <Title>
             {title}:

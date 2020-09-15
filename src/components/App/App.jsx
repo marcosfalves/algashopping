@@ -45,14 +45,13 @@ function App() {
             <AppContainer
                 left={<ShoppingList
                     title="produtos disponíveis"
-                    products={products}
                     onToggle={(handleToggle)}
                 />
                 }
                 middle={<ShoppingList
                     title="Sua lista de compras"
-                    products={selectedProducts}
                     onToggle={(handleToggle)}
+                    displayOnlySelected
                 />
                 }
                 right={<div>
