@@ -11,7 +11,6 @@ import ShoppingList from '../ShoppingList'
 import extractPercentage from '../../utils/extractPercentage'
 
 import {
-    selectAllProducts,
     selectSelectedProducts,
     selectSelectedProductTotalPrice
 } from '../../store/Products/Products.selectors'
@@ -24,7 +23,6 @@ function App() {
 
     const colors = ['#62CBC6', '#00ABAD', '#00858C', '#006073', '#004D61']
 
-    const products = useSelector(selectAllProducts)
     const selectedProducts = useSelector(selectSelectedProducts)
     const totalPrice = useSelector(selectSelectedProductTotalPrice)
 
