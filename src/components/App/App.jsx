@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import LineChart from '../../shared/LineChart'
-import AppContainer from '../AppContainer'
-import AppHeader from '../AppHeader'
-import ShoppingList from '../ShoppingList'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Wrapper } from './App.styles'
-import productsMock from '../../mocks/productsList.json'
+
+import LineChart from '../../shared/LineChart'
+
+import AppHeader from '../AppHeader'
+import AppContainer from '../AppContainer'
+import ShoppingList from '../ShoppingList'
+
 import extractPercentage from '../../utils/extractPercentage'
 
+import { 
+    selectAllProducts, 
+    selectSelectedProducts,
+    selectSelectedProductTotalPrice
+} from '../../store/Products/Products.selectors'
+import {
+    toggleProduct 
+} from '../../store/Products/Products.actions'
+
 function App() {
+    const dispatch = useDispatch()
+    
     const colors = ['#62CBC6', '#00ABAD', '#00858C', '#006073', '#004D61']
 
-    const [products, setProducts] = useState(productsMock.products)
-    const [selectedProducts, setSelectedProducts] = useState([])
-    const [totalPrice, setTotalPrice] = useState(0)
+    const products = useSelector(selectAllProducts)
+    const selectedProducts = useSelector(selectSelectedProducts)
+    const totalPrice = useSelector(selectSelectedProductTotalPrice)
 
     /*const [healthy, setHealthy] = useState(20)
     useEffect(function (){
@@ -21,30 +35,8 @@ function App() {
         }, 5000)
     },[])*/
 
-    useEffect(() => {
-        const total = selectedProducts
-            .map(product => product.price)
-            .reduce((a, b) => a + b, 0)
-
-        setTotalPrice(total)
-
-    }, [selectedProducts])
-
-
-    useEffect(() => {
-        const newSelectedProducts = products
-            .filter(product => product.checked)
-
-        setSelectedProducts(newSelectedProducts)
-    }, [products])
-
     function handleToggle(id) {
-        const newProducts = products.map(product =>
-            product.id === id
-                ? { ...product, checked: !product.checked }
-                : product
-        )
-        setProducts(newProducts)
+        dispatch(toggleProduct(id))
     }
 
     return <Wrapper>
